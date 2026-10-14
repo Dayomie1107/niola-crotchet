@@ -75,7 +75,7 @@ function Hero({ onExploreClick, onCustomOrderClick, phone = "23408129255439" }) 
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 text-sm leading-none">NIOLA</h3>
-                <span className="text-[11px] text-gray-500">@niovellecrochets</span>
+                <span className="text-[11px] text-gray-500">@niolaali</span>
               </div>
             </div>
 
