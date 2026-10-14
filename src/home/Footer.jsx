@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer({ phone = "23408129255439", instagramHandle = "niolaali" }) {
     const whatsappUrl = `https://wa.me/${phone}`;
-    const instagramUrl = `https://www.instagram.com/${instagramHandle}/`;
+    const instagramUrl = `https://www.instagram.com/${instagramHandle}`;
 
     return (
         <footer className="bg-[#2D2727] text-white py-12 px-6">
