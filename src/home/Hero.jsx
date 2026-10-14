@@ -15,7 +15,7 @@ function Hero({ onExploreClick, onCustomOrderClick, phone = "23408129255439" }) 
 
           <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-orange-200 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold text-amber-900 shadow-xs hover:scale-105 transition-transform">
             <FaSmileWink className="text-orange-500 text-base animate-bounce" />
-            <span>@niovellecrochets</span>
+            <span>@niolaali</span>
             <FaStar className="text-amber-400 text-xs" />
           </div>
 
