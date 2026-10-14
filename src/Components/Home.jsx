@@ -35,7 +35,7 @@ function Home() {
                 phone="2348129255439"
             />
 
-            <Footer phone="2348129255439" instagramHandle="niovellecrochets" />
+            <Footer phone="2348129255439" instagramHandle="niolaali" />
         </div>
     )
 }
