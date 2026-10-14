@@ -1,0 +1,114 @@
+[
+    {
+        "id": 1,
+        "name": "Peach Knit Halter Top",
+        "category": "Tops & Sets",
+        "price": "₦15,000",
+        "image": "https://plus.unsplash.com/premium_photo-1725914369052-55ded31e144d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+        "tagline": "Handcrafted soft yarn crop fit"
+    },
+    {
+        "id": 2,
+        "name": "Textured Sun Bucket Hat",
+        "category": "Hats & Accessories",
+        "price": "₦8,500",
+        "image": "https://plus.unsplash.com/premium_photo-1727427850218-0085f4d8c92d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+        "tagline": "Soft woven crochet sun hat"
+    },
+    {
+        "id": 3,
+        "name": "Crochet High-Waisted Mini Skirt",
+        "category": "Bottoms",
+        "price": "₦16,500",
+        "image": "https://images.unsplash.com/photo-1707279458191-624f5d6816a7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+        "tagline": "Custom fitted handmade knit skirt"
+    },
+    {
+        "id": 4,
+        "name": "Crotchet Collar Polo Shirt",
+        "category": "Tops & Sets",
+        "price": "₦16,000",
+        "image": "/images/crothchet-polo.jpg",
+        "tagline": "Breathableopen-stitch collared knit shirt tailored for relaxed everyday style"
+    },
+    {
+        "id": 5,
+        "name": "Sky Blue Contrt Bralette",
+        "category": "Tops & Sets",
+        "price": "₦12,500",
+        "image": "/images/blue-crotchet-bralette.jpg",
+        "tagline": "Handcrafted Knit bikini bralette"
+    },
+    {
+        "id": 6,
+        "name": "Sunset Striped Crochet Mini Skirt",
+        "category": "Bottoms",
+        "price": "₦15,000",
+        "image": "/images/striped-mini-skirt.jpg",
+        "tagline": "Multi-tone striped high-waisted knit skirt"
+    },
+    {
+        "id": 7,
+        "name": "Ruffled Brim Crochet Sun Hat",
+        "category": "Hats & Accessories",
+        "price": "₦9,500",
+        "image": "/images/ruffled-crochet-hat.jpg",
+        "tagline": "Handcrafted open-back knit hat with textured ruffle trim"
+    },
+    {
+        "id": 8,
+        "name": "Fishnet Mesh Crochet Maxi Skirt",
+        "category": "Bottoms",
+        "price": "₦18,000",
+        "image": "/images/mesh-maxi-skirt.jpg",
+        "tagline": "High-waisted form-fitting maxi skirt with open-stitch mesh detail"
+    },
+    {
+        "id": 9,
+        "name": "Distressed Crochet Arm Warmers",
+        "category": "Hats & Accessories",
+        "price": "₦8,000",
+        "image": "/images/crochet-arm-warmers.jpg",
+        "tagline": "Textured open-knit arm sleeves with custom blue detailing"
+    },
+    {
+        "id": 10,
+        "name": "Floral Patchwork Crochet Halter Dress",
+        "category": "Tops & Sets",
+        "price": "₦25,000",
+        "image": "/images/halter-fringe-dress.jpg",
+        "tagline": "Two-tone woven halter neck dress with flower emblem and fringe hem"
+    },
+    {
+        "id": 11,
+        "name": "Sky Blue Ruffle Trim Beanie",
+        "category": "Hats & Accessories",
+        "price": "₦9,000",
+        "image": "/images/sky-blue-beanie.jpg",
+        "tagline": "Handmade soft yarn bucket hat with tiered ruffle edge"
+    },
+    {
+        "id": 12,
+        "name": "Ocean Stripe Drawstring Shorts",
+        "category": "Bottoms",
+        "price": "₦12,000",
+        "image": "/images/striped-shorts.jpg",
+        "tagline": "Comfortable high-waisted striped knit shorts with waist tie"
+    },
+    {
+        "id": 13,
+        "name": "Butterfly Patch Short Set",
+        "category": "Tops & Sets",
+        "price": "₦20,000",
+        "image": "/images/pink-butterfly-set.jpg",
+        "tagline": "Matching short-sleeve crop top and shorts set with crochet butterfly applique"
+    },
+    {
+        "id": 14,
+        "name": "Earth-Tone Fringe Wide-Leg Pants Set",
+        "category": "Tops & Sets",
+        "price": "₦28,000",
+        "image": "/images/fringe-pants-set.jpg",
+        "tagline": "Boho multi-tone striped wide-leg trousers with side fringe detail & matching hat"
+    }
+]
