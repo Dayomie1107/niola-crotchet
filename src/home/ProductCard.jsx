@@ -1,41 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
 
-function ProductCard({ item }) {
-  // Helper to convert "Tops & Sets" -> "tops-and-sets"
-  const createSlug = (category) => {
-    return category
-      .toLowerCase()
-      .replace(/&/g, 'and')
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '');
-  };
+const ProductCard = ({ product, isAllTab = false }) => {
+  const { title, price, category, itemType, image, description } = product
 
-  const categorySlug = createSlug(item.category);
+  const displayCategory = category || itemType || 'Custom'
+  const displayImage = image || '/placeholder.jpg'
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border border-orange-100">
-      {/* Links to /collection/tops-and-sets */}
-      <Link to={`/collection/${categorySlug}`}>
-        <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-gray-100 cursor-pointer">
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          />
-          <span className="absolute top-3 left-3 bg-white/90 text-[#FF7B54] text-xs font-bold px-3 py-1 rounded-full shadow-xs">
-            {item.category}
-          </span>
-        </div>
-      </Link>
+    <div className="bg-white rounded-3xl p-4 shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col justify-between h-full">
+      {/* Image Container with Floating Category Badge */}
+      <div className="w-full h-60 overflow-hidden rounded-2xl bg-gray-100 mb-4 relative">
+        <img
+          src={displayImage}
+          alt={title || 'Product Image'}
+          className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
+        />
 
-      <div className="p-4 text-left">
-        <h3 className="font-bold text-[#2D2727] text-base sm:text-lg">{item.name}</h3>
-        <p className="text-[#FF7B54] font-bold text-sm mt-1">{item.price}</p>
-        <p className="text-gray-500 text-xs mt-1 line-clamp-2">{item.tagline}</p>
+        {/* Floating Category Tag */}
+        <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-orange-600 uppercase tracking-widest shadow-sm">
+          {displayCategory}
+        </span>
       </div>
-    </div >
-  );
+
+      {/* Content */}
+      <div className="flex flex-col flex-grow justify-between">
+        <div>
+          <h3 className="text-base font-bold text-gray-900 leading-snug mb-1">
+            {title}
+          </h3>
+
+          {!isAllTab && description && (
+            <p className="text-xs text-gray-400 line-clamp-2 mb-3">
+              {description}
+            </p>
+          )}
+        </div>
+
+        {!isAllTab && (
+          <div className="flex items-center justify-between pt-2 mt-auto border-t border-gray-50">
+            <span className="text-sm font-extrabold text-gray-800">
+              ₦{(() => {
+                const cleanPrice = String(price || '').replace(/[^\d]/g, '');
+                return cleanPrice ? Number(cleanPrice).toLocaleString() : '0';
+              })()}
+            </span>
+            <button className="px-3.5 py-1.5 bg-gray-200 hover:bg-black hover:text-white text-gray-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer">
+              Order
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }
 
-export default ProductCard;
+export default ProductCard

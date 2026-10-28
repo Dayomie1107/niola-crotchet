@@ -1,102 +1,146 @@
-import React, { useState } from 'react';
-import ProductCard from './ProductCard';
-import productsData from '../data/products.json';
-import subCategoriesData from '../data/categories.json';
+import React, { useEffect, useState } from 'react'
+import ProductCard from './ProductCard'
+import { client } from '../sanityClient'
+import staticProducts from '../data/products.json'
 
-const fallbackCategories = [
-    "Tops & Sets",
-    "Bottoms",
-    "Bags & Totes",
-    "Hats & Accessories"
-];
+const ProductGrid = () => {
+    const [products, setProducts] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('All')
+    const [loading, setLoading] = useState(true)
 
-function ProductGrid() {
-    const [activeTab, setActiveTab] = useState('All');
+    const categories = ['All', 'TOPS & SETS', 'HATS & ACCESSORIES', 'BOTTOMS']
 
-    // Use categories from categories.json, or fallback if empty
-    const categoriesList = (subCategoriesData && subCategoriesData.length > 0)
-        ? subCategoriesData
-        : fallbackCategories;
+    useEffect(() => {
+        const query = `*[_type == "product"]{
+      _id,
+      title,
+      price,
+      itemType,
+      category,
+      "image": image.asset->url,
+      description
+    }`
 
-    // Filter products dynamically based on the active category pill
-    const filteredProducts = activeTab === 'All'
-        ? productsData.slice(0, 3)
-        : productsData.filter(item =>
-            item.category?.trim().toLowerCase() ===
-            activeTab.trim().toLowerCase());
+        client
+            .fetch(query)
+            .then((sanityData) => {
+                let combined = [...staticProducts]
 
+                if (sanityData && sanityData.length > 0) {
+                    const formattedSanity = sanityData.map((item) => ({
+                        ...item,
+                        image: item.image || item.imageUrl || item.img
+                    }))
+                    combined = [...combined, ...formattedSanity]
+                }
+
+                setProducts(combined)
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.error('Sanity fetch error:', err)
+                setProducts(staticProducts)
+                setLoading(false)
+            })
+    }, [])
+
+    if (loading) {
+        return <div className="py-12 text-center text-lg font-medium">Loading collections...</div>
+    }
+
+    const getCategoryTab = (productCategory) => {
+        if (!productCategory) return 'All'
+        const prodCat = productCategory.toLowerCase()
+
+        if (
+            prodCat.includes('top') ||
+            prodCat.includes('set') ||
+            prodCat.includes('halter') ||
+            prodCat.includes('crochet')
+        ) {
+            return 'TOPS & SETS'
+        }
+        if (
+            prodCat.includes('hat') ||
+            prodCat.includes('accessory') ||
+            prodCat.includes('accessories') ||
+            prodCat.includes('bucket')
+        ) {
+            return 'HATS & ACCESSORIES'
+        }
+        if (
+            prodCat.includes('bottom') ||
+            prodCat.includes('skirt') ||
+            prodCat.includes('pant') ||
+            prodCat.includes('shorts')
+        ) {
+            return 'BOTTOMS'
+        }
+        return 'All'
+    }
+
+    const isCategoryMatch = (productCategory, selected) => {
+        return getCategoryTab(productCategory) === selected
+    }
+
+    const filteredProducts = selectedCategory === 'All'
+        ? products.slice(0, 3)
+        : products.filter((p) => {
+            const catValue = p.category || p.itemType || ''
+            return isCategoryMatch(catValue, selectedCategory)
+        })
+
+    const handleCardClick = (product) => {
+        if (selectedCategory === 'All') {
+            const catValue = product.category || product.itemType || ''
+            const targetTab = getCategoryTab(catValue)
+            setSelectedCategory(targetTab)
+        }
+    }
 
     return (
-        <section className="py-10 sm:py-16 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
-            {/* Header */}
-            <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#FF7B54]">
-                    Handmade Catalog
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-[#2D2727] mt-1">
-                    Explore The Collection
-                </h2>
-                <p className="text-gray-600 text-xs sm:text-sm mt-1.5 px-2">
-                    Pick a piece you love or request a custom-made fit in your preferred colors and measurements!
-                </p>
-            </div>
-
-            {/* DeluxeStore Category Filter Container */}
-            <div className="max-w-md mx-auto mb-8 sm:mb-12 px-2 space-y-3 text-center">
-
-                {/* ROW 1: "All" Button Isolated */}
-                <div className="flex justify-center">
+        <section className="max-w-7xl mx-auto px-4 py-12">
+            {/* Category Navigation Tabs */}
+            <div className="flex justify-center gap-2 mb-8 flex-wrap">
+                {categories.map((cat) => (
                     <button
-                        onClick={() => setActiveTab('All')}
-                        className={`px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${activeTab === 'All'
-                            ? 'bg-[#FF7B54] text-white shadow-md'
-                            : 'bg-white text-gray-600 hover:bg-orange-50 border border-orange-100'
+                        key={cat}
+                        onClick={() => setSelectedCategory(cat)}
+                        className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${selectedCategory === cat
+                            ? 'bg-black text-white'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                     >
-                        All
+                        {cat}
                     </button>
-                </div>
-
-                {/* ROW 2: Sub-categories from categories.json */}
-                <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3">
-                    {categoriesList.map((category) => (
-                        <button
-                            key={category}
-                            onClick={() => setActiveTab(category)}
-                            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${activeTab === category
-                                ? 'bg-[#FF7B54] text-white shadow-md'
-                                : 'bg-white text-gray-600 hover:bg-orange-50 border border-orange-100'
-                                }`}
-                        >
-                            {category}
-                        </button>
-                    ))}
-                </div>
-
+                ))}
             </div>
 
-            {/* Product Grid View */}
-            {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {filteredProducts.map((item) => (
-                        <ProductCard key={item.id} item={item} />
-                    ))}
-                </div>
-            ) : (
-                <div className="text-center py-12 px-4 bg-orange-50/50 rounded-3xl max-w-md mx-auto border border-orange-100">
-                    <p className="text-gray-600 text-sm font-medium">
-                        No pieces listed under <span className="font-bold text-[#FF7B54]">"{activeTab}"</span> yet.
-                    </p>
-                    <button
-                        onClick={() => setActiveTab('All')}
-                        className="mt-4 px-5 py-2 bg-[#FF7B54] text-white font-semibold text-xs rounded-full hover:bg-orange-600 transition cursor-pointer"
-                    >
-                        View All Collections ✨
-                    </button>
-                </div>
-            )}
+            {/* Grid Display */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+                {filteredProducts && filteredProducts.length > 0 ? (
+                    filteredProducts.map((product, idx) => (
+                        <div
+                            key={product._id || product.id || idx}
+                            onClick={() => handleCardClick(product)}
+                            className={
+                                selectedCategory === 'All'
+                                    ? 'cursor-pointer transition-transform duration-200 hover:scale-[1.02]'
+                                    : ''
+                            }
+                        >
+                            {/* Pass isAllTab flag to control price and description visibility */}
+                            <ProductCard product={product} isAllTab={selectedCategory === 'All'} />
+                        </div>
+                    ))
+                ) : (
+                    <div className="col-span-full text-center py-8 text-gray-500">
+                        No products found in this category.
+                    </div>
+                )}
+            </div>
         </section>
-    );
+    )
 }
 
-export default ProductGrid;
+export default ProductGrid
